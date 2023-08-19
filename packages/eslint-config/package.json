@@ -1,0 +1,21 @@
+{
+	"name": "@besties/eslint-config",
+	"version": "0.2.3",
+	"description": "besties' eslint config",
+	"main": "index.js",
+	"scripts": {
+		"lint": "eslint ."
+	},
+	"keywords": [],
+	"author": "hazycora",
+	"license": "ISC",
+	"devDependencies": {
+		"eslint": "^8.43.0",
+		"eslint-config-prettier": "^8.8.0"
+	},
+	"private": false,
+	"peerDependencies": {
+		"eslint": "^8.43.0",
+		"eslint-config-prettier": "^8.8.0"
+	}
+}
