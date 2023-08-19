@@ -1,0 +1,15 @@
+.DS_Store
+node_modules
+/build
+/package
+.env
+.env.*
+!.env.example
+
+# the template references dependencies which aren't installed in this package
+/template/app
+
+# Ignore files for PNPM, NPM and YARN
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
