@@ -45,7 +45,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 		pkg.license = defaultLicense
 		pkg.devDependencies = {
-			'@besties/eslint-config': '^0.2.3',
+			'@besties/eslint-config': '^0.2.4',
 			...pkg.devDependencies
 		}
 		pkg.devDependencies.prettier = '^3.0.2'
@@ -68,7 +68,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 			keywords: [],
 			author: '',
 			devDependencies: {
-				'@besties/eslint-config': '^0.2.3',
+				'@besties/eslint-config': '^0.2.4',
 				'@typescript-eslint/eslint-plugin': '^6.13.2',
 				'@typescript-eslint/parser': '^6.13.2',
 				'vite-plugin-svelte-svg': '^2.3.0',
