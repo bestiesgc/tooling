@@ -71,6 +71,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 				'@besties/eslint-config': '^0.2.3',
 				'@typescript-eslint/eslint-plugin': '^6.13.2',
 				'@typescript-eslint/parser': '^6.13.2',
+				'vite-plugin-svelte-svg': '^2.3.0',
 				eslint: '^8.55.0',
 				typescript: '^5.3.2',
 				prettier: '^3.1.0'
@@ -83,6 +84,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		copyFile('template/lib/.prettierignore', '.prettierignore')
 		copyFile('template/lib/.eslintrc.cjs', '.eslintrc.cjs')
 		copyFile('template/lib/.eslintignore', '.eslintignore')
+		copyFile('template/lib/vite.config.ts', 'vite.config.ts')
 		copyFile('.gitignore', '.gitignore')
 	} else {
 		throw new Error('Unknown project type')
