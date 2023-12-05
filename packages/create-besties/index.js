@@ -85,7 +85,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		copyFile('template/lib/.eslintrc.cjs', '.eslintrc.cjs')
 		copyFile('template/lib/.eslintignore', '.eslintignore')
 		copyFile('template/lib/vite.config.ts', 'vite.config.ts')
-		copyFile('.gitignore', '.gitignore')
+		copyFile('template/lib/gitignore', '.gitignore')
 	} else {
 		throw new Error('Unknown project type')
 	}
