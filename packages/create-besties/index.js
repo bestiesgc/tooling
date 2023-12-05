@@ -25,7 +25,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		await createSvelte(cwd, {
 			name,
 			template: 'skeleton',
-			types: null,
+			types: 'typescript',
 			prettier: true,
 			eslint: true,
 			playwright: false,
@@ -45,7 +45,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 		pkg.license = defaultLicense
 		pkg.devDependencies = {
-			'@besties/eslint-config': '^0.2.2',
+			'@besties/eslint-config': '^0.2.3',
 			...pkg.devDependencies
 		}
 		pkg.devDependencies.prettier = '^3.0.2'
@@ -54,22 +54,30 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		copyFile('template/app/.prettierrc', '.prettierrc')
 		copyFile('template/app/.eslintrc.cjs', '.eslintrc.cjs')
 		copyFile('template/app/src/routes/+page.svelte', 'src/routes/+page.svelte')
-		copyFile('template/app/src/app.postcss', 'src/app.postcss')
+		copyFile('template/app/src/app.pcss', 'src/app.pcss')
 	} else if (type == 'lib') {
 		log?.('Initialising project')
 		pkg = {
 			name: name,
 			description: '',
-			main: 'index.js',
+			main: 'build/index.ts',
+			scripts: {
+				build: 'tsc -p tsconfig.json'
+			},
 			type: 'module',
 			keywords: [],
 			author: '',
 			devDependencies: {
-				eslint: '^8.47.0',
-				prettier: '^3.0.1'
+				'@besties/eslint-config': '^0.2.3',
+				'@typescript-eslint/eslint-plugin': '^6.13.2',
+				'@typescript-eslint/parser': '^6.13.2',
+				eslint: '^8.55.0',
+				typescript: '^5.3.2',
+				prettier: '^3.1.0'
 			}
 		}
 		fs.mkdirSync(cwd, { recursive: true })
+		fs.mkdirSync(path.join(cwd, 'src'), { recursive: true })
 		log?.('Adding config files')
 		copyFile('template/lib/.prettierrc', '.prettierrc')
 		copyFile('template/lib/.prettierignore', '.prettierignore')
@@ -85,7 +93,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 	pkg.scripts = pkg.scripts ?? {}
 	pkg.scripts.lint = 'prettier --check . && eslint .'
 	pkg.scripts.format = 'prettier --write .'
-	pkg.scripts.preinstall = 'npx only-allow pnpm'
+	if (packageManager == 'pnpm') pkg.scripts.preinstall = 'npx only-allow pnpm'
 	fs.writeFileSync(path.join(cwd, 'README.md'), `# ${name}\n`, 'utf-8')
 	fs.writeFileSync(pkgPath, prettyJSON(pkg), 'utf-8')
 }
