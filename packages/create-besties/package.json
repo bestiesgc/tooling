@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "bin.js",
 	"types": "module",
-	"bin": "./bin.js",
+	"bin": {
+		"create-besties": "bin.js"
+	},
 	"scripts": {
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
