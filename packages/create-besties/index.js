@@ -57,6 +57,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		copyFile('template/app/src/routes/+page.svelte', 'src/routes/+page.svelte')
 		copyFile('template/app/src/app.pcss', 'src/app.pcss')
 		copyFile('template/app/vite.config.ts', 'vite.config.ts')
+		copyFile('template/app/postcss.config.cjs', 'postcss.config.cjs')
 	} else if (type == 'lib') {
 		log?.('Initialising project')
 		pkg = {
