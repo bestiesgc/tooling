@@ -28,6 +28,15 @@ module.exports = {
 		}
 	],
 	rules: {
-		'@typescript-eslint/no-explicit-any': 'warn'
+		'svelte/block-lang': [
+			'error',
+			{
+				script: 'ts',
+				style: 'postcss'
+			}
+		],
+		'@typescript-eslint/no-explicit-any': 'warn',
+		'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+		'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
 	}
-};
+}
