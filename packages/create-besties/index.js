@@ -47,6 +47,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		pkg.devDependencies = {
 			'@besties/eslint-config': '^0.2.4',
 			'vite-plugin-svelte-svg': '^2.3.0',
+			'postcss-nesting': '12.0.2',
 			...pkg.devDependencies
 		}
 		pkg.devDependencies.prettier = '^3.0.2'
