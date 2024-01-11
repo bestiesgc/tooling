@@ -8,7 +8,7 @@ const defaultLicense = 'GPL-3.0-or-later'
 
 const svelteAddInstalled = await commandExists('svelte-add')
 const packageManager = (await commandExists('pnpm')) ? 'pnpm' : 'npm'
-const packageManagerX = packageManager == 'pnpm' ? 'pnpx' : 'npx'
+const packageManagerX = packageManager == 'pnpm' ? 'pnpm dlx' : 'npx'
 
 export default async function create(cwd, name, type = 'app', log = false) {
 	function copyFile(fromPath, toPath) {
