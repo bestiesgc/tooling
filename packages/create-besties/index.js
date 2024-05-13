@@ -31,31 +31,24 @@ export default async function create(cwd, name, type = 'app', log = false) {
 			playwright: false,
 			vitest: false
 		})
-		log?.('Adding PostCSS')
-		if (svelteAddInstalled) {
-			await exec(`svelte-add ${'postcss'}`, {
-				cwd
-			})
-		} else {
-			await exec(`${packageManagerX} svelte-add@latest ${'postcss'}`, {
-				cwd
-			})
-		}
 		log?.('Updating config files')
 		pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 		pkg.license = defaultLicense
 		pkg.devDependencies = {
-			'@besties/eslint-config': '^0.2.4',
-			'vite-plugin-svelte-svg': '^2.3.0',
-			'postcss-nesting': '12.0.2',
+			'@besties/eslint-config': '0.2.4',
+			'@hazycora/vite-plugin-svelte-svg': '^2.4.0',
+			postcss: '^8.4.38',
+			autoprefixer: '^10.4.19',
+			'postcss-nesting': '^12.1.4',
 			...pkg.devDependencies
 		}
-		pkg.devDependencies.prettier = '^3.0.2'
+		pkg.devDependencies.prettier = '^3.2.5'
 		pkg.devDependencies['eslint-plugin-svelte'] = '^2.32.4'
 		pkg.devDependencies['prettier-plugin-svelte'] = '^3.0.3'
 		copyFile('template/app/.prettierrc', '.prettierrc')
 		copyFile('template/app/.eslintrc.cjs', '.eslintrc.cjs')
 		copyFile('template/app/src/routes/+page.svelte', 'src/routes/+page.svelte')
+		copyFile('template/app/src/routes/+layout.svelte', 'src/routes/+layout.svelte')
 		copyFile('template/app/src/app.pcss', 'src/app.pcss')
 		copyFile('template/app/vite.config.ts', 'vite.config.ts')
 		copyFile('template/app/postcss.config.cjs', 'postcss.config.cjs')
@@ -75,9 +68,9 @@ export default async function create(cwd, name, type = 'app', log = false) {
 				'@besties/eslint-config': '^0.2.4',
 				'@typescript-eslint/eslint-plugin': '^6.13.2',
 				'@typescript-eslint/parser': '^6.13.2',
-				eslint: '^8.55.0',
-				typescript: '^5.3.2',
-				prettier: '^3.1.0'
+				eslint: '^9.2.0',
+				typescript: '^5.4.5',
+				prettier: '^3.2.5'
 			}
 		}
 		fs.mkdirSync(cwd, { recursive: true })
@@ -88,6 +81,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		copyFile('template/lib/.eslintrc.cjs', '.eslintrc.cjs')
 		copyFile('template/lib/.eslintignore', '.eslintignore')
 		copyFile('template/lib/gitignore', '.gitignore')
+		copyFile('template/lib/tsconfig.json', 'tsconfig.json')
 	} else {
 		throw new Error('Unknown project type')
 	}
