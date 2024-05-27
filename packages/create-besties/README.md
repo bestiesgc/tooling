@@ -14,4 +14,4 @@ npm create besties my-amazing-app --type app
 
 ## License
 
-[AGPLv3](./LICENSE)
+[OQL-1.1](./LICENSE)
