@@ -50,6 +50,7 @@ export default async function create(cwd, name, type = 'app', log = false) {
 			'src/routes/+layout.svelte'
 		)
 		copyFile('template/app/src/app.pcss', 'src/app.pcss')
+		copyFile('template/app/src/app.d.ts', 'src/app.d.ts')
 		copyFile('template/app/vite.config.ts', 'vite.config.ts')
 		copyFile('template/app/postcss.config.cjs', 'postcss.config.cjs')
 	} else if (type == 'lib') {
