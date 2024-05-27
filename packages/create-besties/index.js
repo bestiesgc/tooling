@@ -77,10 +77,10 @@ export default async function create(cwd, options = {}) {
 			license: defaultLicense,
 			dependencies: {},
 			devDependencies: {
-				'@besties/eslint-config': '^0.2.4',
-				'@typescript-eslint/eslint-plugin': '^6.13.2',
-				'@typescript-eslint/parser': '^6.13.2',
-				eslint: '^9.2.0',
+				'@besties/eslint-config': '0.2.4',
+				'@typescript-eslint/eslint-plugin': '^7.11.0',
+				'@typescript-eslint/parser': '^7.11.0',
+				eslint: '^8.0.0',
 				typescript: '^5.4.5',
 				prettier: '^3.2.5'
 			}
