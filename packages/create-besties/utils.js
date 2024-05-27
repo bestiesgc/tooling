@@ -1,4 +1,5 @@
 import util from 'node:util'
+import { spawn } from 'node:child_process'
 
 export function toValidPackageName(name) {
 	return name
@@ -16,3 +17,17 @@ export function prettyJSON(data) {
 export const commandExists = util.promisify(
 	(await import('command-exists')).default
 )
+
+export function getGitUser() {
+	return new Promise((resolve, reject) => {
+		const cmd = spawn('git', ['config', 'user.name'])
+		let err = ''
+		let name = ''
+		cmd.stdout.on('data', data => (name += data))
+		cmd.stderr.on('data', data => (err += data))
+		cmd.on('close', code => {
+			if (code == 0) resolve(name.trim())
+			else reject(err)
+		})
+	})
+}

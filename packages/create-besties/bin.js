@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import * as p from '@clack/prompts'
 import { grey, bgMagenta, black, magenta, underline, bold } from 'kleur/colors'
 import path from 'node:path'
-import { toValidPackageName } from './utils.js'
+import { getGitUser, toValidPackageName } from './utils.js'
 import create from './index.js'
 import meow from 'meow'
 
@@ -16,6 +16,7 @@ const cli = meow(
 
 	${bold(underline('Options'))}
 	  ${bold('-t, --type <type>')}  	specify the project type to create (app or lib)
+	  ${bold('-a, --author <name>')}	specify the author of the project
 
 	${bold(underline('Examples'))}
 	  ${grey('$')} ${magenta('npm')} init besties ${grey('my-amazing-app')}
@@ -35,6 +36,10 @@ const cli = meow(
 				type: 'string',
 				shortFlag: 't',
 				choices: ['app', 'lib']
+			},
+			author: {
+				type: 'string',
+				shortFlag: 'a'
 			}
 		}
 	}
@@ -91,10 +96,35 @@ const projectType =
 		]
 	}))
 
+let authorName = cli.flags.author
+if (!authorName) {
+	authorName = await p.text({
+		message: "Who's authoring this project?",
+		placeholder: '  (hit Enter to use git user.name)'
+	})
+	if (!authorName) {
+		try {
+			authorName = await getGitUser()
+		} catch (error) {
+			console.error(
+				'No git user.name set. Please specify an author with the --author flag.'
+			)
+			process.exit(1)
+		}
+	}
+}
+
 console.log(grey('│'))
 
-await create(cwd, name, projectType, text => {
-	console.log(grey(`│  ${text}`))
-})
+const options = {
+	type: projectType,
+	name,
+	author: authorName,
+	log: text => {
+		console.log(grey(`│  ${text}`))
+	}
+}
+
+await create(cwd, options)
 
 p.outro('Done! happy hacking x3')

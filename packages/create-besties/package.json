@@ -13,7 +13,7 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC",
+	"license": "OQL-1.1",
 	"type": "module",
 	"dependencies": {
 		"@clack/prompts": "^0.7.0",
