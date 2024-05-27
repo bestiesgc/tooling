@@ -2,13 +2,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { create as createSvelte } from 'create-svelte'
 import { prettyJSON, commandExists } from './utils.js'
-import exec from './exec.js'
 
 const defaultLicense = 'GPL-3.0-or-later'
 
-const svelteAddInstalled = await commandExists('svelte-add')
 const packageManager = (await commandExists('pnpm')) ? 'pnpm' : 'npm'
-const packageManagerX = packageManager == 'pnpm' ? 'pnpm dlx' : 'npx'
 
 export default async function create(cwd, name, type = 'app', log = false) {
 	function copyFile(fromPath, toPath) {
@@ -48,7 +45,10 @@ export default async function create(cwd, name, type = 'app', log = false) {
 		copyFile('template/app/.prettierrc', '.prettierrc')
 		copyFile('template/app/.eslintrc.cjs', '.eslintrc.cjs')
 		copyFile('template/app/src/routes/+page.svelte', 'src/routes/+page.svelte')
-		copyFile('template/app/src/routes/+layout.svelte', 'src/routes/+layout.svelte')
+		copyFile(
+			'template/app/src/routes/+layout.svelte',
+			'src/routes/+layout.svelte'
+		)
 		copyFile('template/app/src/app.pcss', 'src/app.pcss')
 		copyFile('template/app/vite.config.ts', 'vite.config.ts')
 		copyFile('template/app/postcss.config.cjs', 'postcss.config.cjs')
