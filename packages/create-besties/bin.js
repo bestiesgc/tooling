@@ -97,24 +97,30 @@ const projectType =
 	}))
 
 let authorName = cli.flags.author
-if (!authorName) {
+if (authorName === undefined) {
 	authorName = await p.text({
 		message: "Who's authoring this project?",
 		placeholder: '  (hit Enter to use git user.name)'
 	})
-	if (!authorName) {
-		try {
-			authorName = await getGitUser()
-		} catch (error) {
-			console.error(
-				'No git user.name set. Please specify an author with the --author flag.'
-			)
-			process.exit(1)
-		}
+}
+if (!authorName) {
+	try {
+		authorName = await getGitUser()
+	} catch (error) {
+		console.error(
+			'No git user.name set. Please specify an author with the --author flag.'
+		)
+		process.exit(1)
 	}
 }
 
 console.log(grey('│'))
+
+if (cli.flags.author === '') {
+	console.log(
+		grey('│  -a specified without value, using git user.name as author')
+	)
+}
 
 const options = {
 	type: projectType,
