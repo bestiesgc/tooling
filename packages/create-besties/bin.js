@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs'
 import * as p from '@clack/prompts'
-import { grey, bgMagenta, black, magenta, underline, bold } from 'kleur/colors'
+import pc from 'picocolors'
 import path from 'node:path'
 import { getGitUser, toValidPackageName } from './utils.js'
 import create from './index.js'
@@ -15,23 +15,23 @@ const cli = meow(
 	`
 	Create new besties projects instantly.
 
-	${bold(underline('Usage'))}
-	  ${grey('$')} ${magenta('pnpm')} init besties ${grey('[project-name]')}
+	${pc.bold(pc.underline('Usage'))}
+	  ${pc.gray('$')} ${pc.magenta('pnpm')} init besties ${pc.gray('[project-name]')}
 
-	${bold(underline('Options'))}
-	  ${bold('-t, --type <type>')}   	specify the project type to create ${grey('(app, lib)')}
-	  ${bold('-a, --author <name>')} 	specify the author of the project
-	  ${bold('-l, --license <spdx>')}	specify the license of the project ${grey(`(default: ${defaultLicense})`)}
+	${pc.bold(pc.underline('Options'))}
+	  ${pc.bold('-t, --type <type>')}   	specify the project type to create ${pc.gray('(app, lib)')}
+	  ${pc.bold('-a, --author <name>')} 	specify the author of the project
+	  ${pc.bold('-l, --license <spdx>')}	specify the license of the project ${pc.gray(`(default: ${defaultLicense})`)}
 
-	${bold(underline('Examples'))}
-	  ${grey('$')} ${magenta('pnpm')} init besties ${grey('my-amazing-app')}
+	${pc.bold(pc.underline('Examples'))}
+	  ${pc.gray('$')} ${pc.magenta('pnpm')} init besties ${pc.gray('my-amazing-app')}
 	  respond to the prompts to decide how to create your new project 🌈
-	  ${grey('$')} ${magenta('pnpm')} init besties ${grey(
+	  ${pc.gray('$')} ${pc.magenta('pnpm')} init besties ${pc.gray(
 			'my-amazing-app --type app'
 		)}
 	  make a new web-app project
 
-	made with ${magenta('♥')} by ${link('besties', 'https://besties.house')}
+	made with ${pc.magenta('♥')} by ${link('besties', 'https://besties.house')}
 
 `,
 	{
@@ -60,9 +60,9 @@ const { version, homepage } = JSON.parse(
 	fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
 )
 console.log(`
-${grey(`${link('create-besties', homepage, false)} v${version}`)}
+${pc.gray(`${link('create-besties', homepage, false)} v${version}`)}
 `)
-p.intro(bgMagenta(black('hey bestie')))
+p.intro(pc.bgMagenta(pc.black('hey bestie')))
 
 if (cwd === '.') {
 	const dir = await p.text({
@@ -131,7 +131,7 @@ if (license === undefined) {
 		options: licenses.map(license => {
 			let description = license.description
 			if (license.copyleft) {
-				description = `${magenta('🄯')}  ${description}`
+				description = `${pc.magenta('🄯')}  ${description}`
 			}
 
 			return {
@@ -146,17 +146,17 @@ if (!license) {
 	license = defaultLicense
 }
 
-console.log(grey('│'))
+console.log(pc.gray('│'))
 
 if (cli.flags.author === '') {
 	console.log(
-		grey('│  -a specified without value, using git user.name as author')
+		pc.gray('│  -a specified without value, using git user.name as author')
 	)
 }
 
 if (cli.flags.license === '') {
 	console.log(
-		grey(
+		pc.gray(
 			`│  -l specified without value, using default license (${defaultLicense})`
 		)
 	)
@@ -168,7 +168,7 @@ const options = {
 	author: authorName,
 	license: license,
 	log: text => {
-		console.log(grey(`│  ${text}`))
+		console.log(pc.gray(`│  ${text}`))
 	}
 }
 

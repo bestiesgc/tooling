@@ -1,5 +1,5 @@
 import { stdout as stdoutSupportsHyperlink } from 'supports-hyperlinks'
-import { grey, underline } from 'kleur/colors'
+import pc from 'picocolors'
 
 const OSC = `\u001B]`
 const SEP = ';'
@@ -10,11 +10,11 @@ export default function link(text, url, mdFallback = true) {
 		if (!mdFallback) {
 			return text
 		}
-		return `${grey('[')}${text}${grey('](')}${underline(url)}${grey(')')}`
+		return `${pc.gray('[')}${text}${pc.gray('](')}${pc.underline(url)}${pc.gray(')')}`
 	}
 
 	const link = `${OSC}8${SEP}${SEP}${url}${ST}${text}${OSC}8${SEP}${SEP}${ST}`
 
 	// Adding an underline
-	return underline(link)
+	return pc.underline(link)
 }
