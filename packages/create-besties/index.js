@@ -1,16 +1,13 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { create as createSvelte } from 'sv'
-import { prettyJSON, commandExists, getGitUser } from './utils.js'
-
-const defaultLicense = 'OQL-1.1'
-
-const packageManager = (await commandExists('pnpm')) ? 'pnpm' : 'npm'
+import { prettyJSON, getGitUser } from './utils.js'
+import licenses from './licenses.js'
 
 export default async function create(cwd, options = {}) {
 	const type = options.type
 	const name = options.name
-	const license = options.license ?? defaultLicense
+	const licenseSpdx = options.license
 	if (!name) throw new Error('Project name is required')
 	const log = options.log ?? (() => {})
 	function copyFile(fromPath, toPath) {
@@ -23,9 +20,16 @@ export default async function create(cwd, options = {}) {
 	const pkgPath = path.join(cwd, 'package.json')
 	let pkg
 	const author = options.author ?? (await getGitUser())
-	const licenseText = fs
-		.readFileSync(new URL('template/LICENSE.md', import.meta.url), 'utf-8')
-		.replace('{Licensor}', author)
+	let licenseText
+
+	const license = licenses.find(licenseSpdx)
+	if (!license) {
+		throw new Error(`License ${licenseSpdx} not found`)
+	}
+
+	const currentYear = new Date().getFullYear()
+	licenseText = license.text(author, currentYear)
+
 	if (type == 'app') {
 		log?.('Creating SvelteKit app')
 		await createSvelte(cwd, {
@@ -103,6 +107,10 @@ export default async function create(cwd, options = {}) {
 	pkg.scripts.lint = 'prettier --check . && eslint .'
 	pkg.scripts.format = 'prettier --write .'
 	fs.writeFileSync(path.join(cwd, 'README.md'), `# ${name}\n`, 'utf-8')
-	fs.writeFileSync(path.join(cwd, 'LICENSE.md'), licenseText, 'utf-8')
+	fs.writeFileSync(
+		path.join(cwd, license.markdown ? 'LICENSE.md' : 'LICENSE'),
+		licenseText,
+		'utf-8'
+	)
 	fs.writeFileSync(pkgPath, prettyJSON(pkg), 'utf-8')
 }

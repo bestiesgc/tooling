@@ -6,6 +6,9 @@ import path from 'node:path'
 import { getGitUser, toValidPackageName } from './utils.js'
 import create from './index.js'
 import meow from 'meow'
+import licenses from './licenses.js'
+
+const defaultLicense = 'LicenseRef-OQL-1.2'
 
 const cli = meow(
 	`
@@ -17,6 +20,7 @@ const cli = meow(
 	${bold(underline('Options'))}
 	  ${bold('-t, --type <type>')}  	specify the project type to create (app or lib)
 	  ${bold('-a, --author <name>')}	specify the author of the project
+	  ${bold('-l, --license <name>')}	specify the license of the project (default: ${defaultLicense})
 
 	${bold(underline('Examples'))}
 	  ${grey('$')} ${magenta('npm')} init besties ${grey('my-amazing-app')}
@@ -40,6 +44,10 @@ const cli = meow(
 			author: {
 				type: 'string',
 				shortFlag: 'a'
+			},
+			license: {
+				type: 'string',
+				shortFlag: 'l'
 			}
 		}
 	}
@@ -114,6 +122,29 @@ if (!authorName) {
 	}
 }
 
+let license = cli.flags.license
+if (license === undefined) {
+	license = await p.select({
+		message: 'What license should this project use?',
+		placeholder: `  (default: ${defaultLicense})`,
+		options: licenses.map(license => {
+			let description = license.description
+			if (license.copyleft) {
+				description = `${magenta('🄯')}  ${description}`
+			}
+
+			return {
+				value: license.spdx,
+				label: license.name,
+				hint: description
+			}
+		})
+	})
+}
+if (!license) {
+	license = defaultLicense
+}
+
 console.log(grey('│'))
 
 if (cli.flags.author === '') {
@@ -122,10 +153,19 @@ if (cli.flags.author === '') {
 	)
 }
 
+if (cli.flags.license === '') {
+	console.log(
+		grey(
+			`│  -l specified without value, using default license (${defaultLicense})`
+		)
+	)
+}
+
 const options = {
 	type: projectType,
 	name,
 	author: authorName,
+	license: license,
 	log: text => {
 		console.log(grey(`│  ${text}`))
 	}
