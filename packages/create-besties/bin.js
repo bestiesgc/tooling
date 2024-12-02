@@ -7,6 +7,7 @@ import { getGitUser, toValidPackageName } from './utils.js'
 import create from './index.js'
 import meow from 'meow'
 import licenses from './licenses.js'
+import link from './link.js'
 
 const defaultLicense = 'LicenseRef-OQL-1.2'
 
@@ -18,19 +19,19 @@ const cli = meow(
 	  ${grey('$')} ${magenta('pnpm')} init besties ${grey('[project-name]')}
 
 	${bold(underline('Options'))}
-	  ${bold('-t, --type <type>')}  	specify the project type to create (app or lib)
-	  ${bold('-a, --author <name>')}	specify the author of the project
-	  ${bold('-l, --license <name>')}	specify the license of the project (default: ${defaultLicense})
+	  ${bold('-t, --type <type>')}   	specify the project type to create ${grey('(app, lib)')}
+	  ${bold('-a, --author <name>')} 	specify the author of the project
+	  ${bold('-l, --license <spdx>')}	specify the license of the project ${grey(`(default: ${defaultLicense})`)}
 
 	${bold(underline('Examples'))}
-	  ${grey('$')} ${magenta('npm')} init besties ${grey('my-amazing-app')}
+	  ${grey('$')} ${magenta('pnpm')} init besties ${grey('my-amazing-app')}
 	  respond to the prompts to decide how to create your new project 🌈
-	  ${grey('$')} ${magenta('npm')} init besties ${grey(
+	  ${grey('$')} ${magenta('pnpm')} init besties ${grey(
 			'my-amazing-app --type app'
 		)}
 	  make a new web-app project
 
-	made with ${magenta('♥')} by besties
+	made with ${magenta('♥')} by ${link('besties', 'https://besties.house')}
 
 `,
 	{
@@ -55,11 +56,11 @@ const cli = meow(
 
 let cwd = cli.input[0] || '.'
 
-const { version } = JSON.parse(
+const { version, homepage } = JSON.parse(
 	fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
 )
 console.log(`
-${grey(`create-besties v${version}`)}
+${grey(`${link('create-besties', homepage, false)} v${version}`)}
 `)
 p.intro(bgMagenta(black('hey bestie')))
 

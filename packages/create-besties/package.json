@@ -3,6 +3,7 @@
 	"version": "1.0.1",
 	"description": "A CLI for creating new apps and libraries using besties' configurations",
 	"main": "bin.js",
+	"homepage": "https://git.gay/besties/tooling/src/branch/main/packages/create-besties",
 	"types": "module",
 	"bin": {
 		"create-besties": "bin.js"
@@ -20,6 +21,7 @@
 		"command-exists": "^1.2.9",
 		"kleur": "^4.1.5",
 		"meow": "^13.2.0",
+		"supports-hyperlinks": "^3.1.0",
 		"sv": "^0.6.5"
 	},
 	"devDependencies": {

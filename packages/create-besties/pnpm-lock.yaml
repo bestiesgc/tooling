@@ -20,6 +20,9 @@ importers:
       meow:
         specifier: ^13.2.0
         version: 13.2.0
+      supports-hyperlinks:
+        specifier: ^3.1.0
+        version: 3.1.0
       sv:
         specifier: ^0.6.5
         version: 0.6.5
@@ -399,6 +402,10 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
+  supports-hyperlinks@3.1.0:
+    resolution: {integrity: sha512-2rn0BZ+/f7puLOHZm1HOJfwBggfaHXUpPUSSG/SWM4TWp5KCfmNYwnC3hruy2rZlMnmWZ+QAGpZfchu3f3695A==}
+    engines: {node: '>=14.18'}
+
   sv@0.6.5:
     resolution: {integrity: sha512-zd2Ja0HKNlmg+gWjAw9ziS0ShAiAx8nFE4tfbIeaXoQ3vq84PEKh5GvKr3dZdVRgyKT6q2V1rb+yrhpF+S5LjA==}
     hasBin: true
@@ -772,6 +779,11 @@ snapshots:
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
+
+  supports-hyperlinks@3.1.0:
+    dependencies:
+      has-flag: 4.0.0
+      supports-color: 7.2.0
 
   sv@0.6.5: {}
 
