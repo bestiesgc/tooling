@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import fs from 'node:fs'
-import * as p from '@clack/prompts'
+import * as p from '@hazycora/prompts'
 import pc from 'picocolors'
 import path from 'node:path'
 import { getGitUser, toValidPackageName } from './utils.js'
@@ -9,6 +9,19 @@ import meow from 'meow'
 import licenses from './licenses.js'
 import link from './link.js'
 
+p.config.colors.symbol.initial = 'blue'
+p.config.colors.symbol.active = 'blue'
+p.config.colors.bar.initial = 'blue'
+p.config.colors.bar.active = 'blue'
+p.config.colors.checkbox.active = 'blue'
+
+p.config.colors.symbol.submit = 'magenta'
+p.config.colors.log.success = 'magenta'
+p.config.colors.log.step = 'magenta'
+p.config.colors.radio.active = 'magenta'
+p.config.colors.checkbox.selected = 'magenta'
+p.config.colors.key.active = ['inverse', 'bgMagenta', 'gray']
+
 const defaultLicense = 'LicenseRef-OQL-1.2'
 
 const cli = meow(
@@ -16,17 +29,17 @@ const cli = meow(
 	Create new besties projects instantly.
 
 	${pc.bold(pc.underline('Usage'))}
-	  ${pc.gray('$')} ${pc.magenta('pnpm')} init besties ${pc.gray('[project-name]')}
+	  ${pc.dim('$')} ${pc.magenta('pnpm')} init besties ${pc.dim('[project-name]')}
 
 	${pc.bold(pc.underline('Options'))}
-	  ${pc.bold('-t, --type <type>')}   	specify the project type to create ${pc.gray('(app, lib)')}
+	  ${pc.bold('-t, --type <type>')}   	specify the project type to create ${pc.dim('(app, lib)')}
 	  ${pc.bold('-a, --author <name>')} 	specify the author of the project
-	  ${pc.bold('-l, --license <spdx>')}	specify the license of the project ${pc.gray(`(default: ${defaultLicense})`)}
+	  ${pc.bold('-l, --license <spdx>')}	specify the license of the project ${pc.dim(`(default: ${defaultLicense})`)}
 
 	${pc.bold(pc.underline('Examples'))}
-	  ${pc.gray('$')} ${pc.magenta('pnpm')} init besties ${pc.gray('my-amazing-app')}
+	  ${pc.dim('$')} ${pc.magenta('pnpm')} init besties ${pc.dim('my-amazing-app')}
 	  respond to the prompts to decide how to create your new project 🌈
-	  ${pc.gray('$')} ${pc.magenta('pnpm')} init besties ${pc.gray(
+	  ${pc.dim('$')} ${pc.magenta('pnpm')} init besties ${pc.dim(
 			'my-amazing-app --type app'
 		)}
 	  make a new web-app project
@@ -60,7 +73,7 @@ const { version, homepage } = JSON.parse(
 	fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
 )
 console.log(`
-${pc.gray(`${link('create-besties', homepage, false)} v${version}`)}
+${pc.dim(`${link('create-besties', homepage, false)} v${version}`)}
 `)
 p.intro(pc.bgMagenta(pc.black('hey bestie')))
 
@@ -146,18 +159,16 @@ if (!license) {
 	license = defaultLicense
 }
 
-console.log(pc.gray('│'))
-
 if (cli.flags.author === '') {
-	console.log(
-		pc.gray('│  -a specified without value, using git user.name as author')
+	p.log.warn(
+		pc.dim('-a specified without value, using git user.name as author')
 	)
 }
 
 if (cli.flags.license === '') {
-	console.log(
-		pc.gray(
-			`│  -l specified without value, using default license (${defaultLicense})`
+	p.log.warn(
+		pc.dim(
+			`-l specified without value, using default license (${defaultLicense})`
 		)
 	)
 }
@@ -168,7 +179,7 @@ const options = {
 	author: authorName,
 	license: license,
 	log: text => {
-		console.log(pc.gray(`│  ${text}`))
+		p.log.message(pc.dim(text))
 	}
 }
 
