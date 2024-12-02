@@ -1,7 +1,6 @@
 <div class="center">
 	<div>
-		<h1>hey <em>bestie</em>!</h1>
-		<p>hav fun x3</p>
+		<h1>hi <em>&lt;3</em></h1>
 	</div>
 </div>
 
@@ -17,9 +16,5 @@
 	em {
 		font: inherit;
 		color: #ff79c6;
-	}
-	p {
-		color: #cacaca;
-		margin: 0.5em 0;
 	}
 </style>
