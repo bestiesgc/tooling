@@ -3,12 +3,18 @@
 	"version": "0.2.5",
 	"description": "besties' eslint config",
 	"main": "index.js",
+	"homepage": "https://git.gay/besties/tooling/src/branch/main/packages/eslint-config",
 	"scripts": {
 		"lint": "eslint ."
 	},
 	"keywords": [],
 	"author": "hazycora",
 	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://git.gay/besties/tooling.git",
+		"directory": "packages/eslint-config"
+	},
 	"devDependencies": {
 		"eslint": "^9.2.0",
 		"eslint-config-prettier": "^9.1.0"

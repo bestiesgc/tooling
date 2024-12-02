@@ -16,6 +16,11 @@
 	"author": "hazycora",
 	"license": "LicenseRef-OQL-1.2",
 	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://git.gay/besties/tooling.git",
+		"directory": "packages/create-besties"
+	},
 	"dependencies": {
 		"@hazycora/prompts": "^0.8.2",
 		"command-exists": "^1.2.9",
