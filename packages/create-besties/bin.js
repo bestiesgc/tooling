@@ -23,23 +23,26 @@ p.config.colors.checkbox.selected = 'magenta'
 p.config.colors.key.active = ['inverse', 'bgMagenta', 'gray']
 
 const defaultLicense = 'LicenseRef-OQL-1.2'
+const defaultAuthor = await getGitUser().catch(() => undefined)
+
+const { version, homepage } = JSON.parse(
+	fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
+)
 
 const cli = meow(
 	`
-	Create new besties projects instantly.
-
 	${pc.bold(pc.underline('Usage'))}
-	  ${pc.dim('$')} ${pc.magenta('pnpm')} init besties ${pc.dim('[project-name]')}
+	  ${pc.dim('$')} ${pc.magenta('pnpm')} create besties ${pc.dim('[project-name]')}
 
 	${pc.bold(pc.underline('Options'))}
-	  ${pc.bold('-t, --type <type>')}   	specify the project type to create ${pc.dim('(app, lib)')}
-	  ${pc.bold('-a, --author <name>')} 	specify the author of the project
-	  ${pc.bold('-l, --license <spdx>')}	specify the license of the project ${pc.dim(`(default: ${defaultLicense})`)}
+	  ${pc.bold('-t, --type <type>')}   	${pc.dim('(app, lib)')}
+	  ${pc.bold('-a, --author <name>')} 	${pc.dim(`(default: ${defaultAuthor})`)}
+	  ${pc.bold('-l, --license <spdx>')}	${pc.dim(`(default: ${defaultLicense})`)}
 
 	${pc.bold(pc.underline('Examples'))}
-	  ${pc.dim('$')} ${pc.magenta('pnpm')} init besties ${pc.dim('my-amazing-app')}
+	  ${pc.dim('$')} ${pc.magenta('pnpm')} create besties ${pc.dim('my-amazing-app')}
 	  respond to the prompts to decide how to create your new project 🌈
-	  ${pc.dim('$')} ${pc.magenta('pnpm')} init besties ${pc.dim(
+	  ${pc.dim('$')} ${pc.magenta('pnpm')} create besties ${pc.dim(
 			'my-amazing-app --type app'
 		)}
 	  make a new web-app project
@@ -49,6 +52,8 @@ const cli = meow(
 `,
 	{
 		importMeta: import.meta,
+		description: 'Create new besties projects instantly.',
+		version: `${pc.dim(link('create-besties', homepage))} v${version}`,
 		flags: {
 			type: {
 				type: 'string',
@@ -62,16 +67,22 @@ const cli = meow(
 			license: {
 				type: 'string',
 				shortFlag: 'l'
+			},
+			version: {
+				type: 'boolean',
+				shortFlag: 'v'
 			}
 		}
 	}
 )
 
+if (cli.flags.help) {
+	console.log(cli.help)
+	process.exit(0)
+}
+
 let cwd = cli.input[0] || '.'
 
-const { version, homepage } = JSON.parse(
-	fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
-)
 console.log(`
 ${pc.dim(`${link('create-besties', homepage, false)} v${version}`)}
 `)
@@ -126,9 +137,9 @@ if (authorName === undefined) {
 	})
 }
 if (!authorName) {
-	try {
-		authorName = await getGitUser()
-	} catch (error) {
+	if (defaultAuthor) {
+		authorName = defaultAuthor
+	} else {
 		console.error(
 			'No git user.name set. Please specify an author with the --author flag.'
 		)
