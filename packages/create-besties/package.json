@@ -13,7 +13,7 @@
 	},
 	"keywords": [],
 	"author": "hazycora",
-	"license": "OQL-1.1",
+	"license": "LicenseRef-OQL-1.2",
 	"type": "module",
 	"dependencies": {
 		"@clack/prompts": "^0.7.0",

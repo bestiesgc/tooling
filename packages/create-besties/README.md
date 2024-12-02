@@ -14,4 +14,4 @@ npm create besties my-amazing-app --type app
 
 ## License
 
-[OQL-1.1](./LICENSE)
+[Opinionated Queer License v1.2](./LICENSE.md)
