@@ -102,7 +102,7 @@ export default async function create(cwd, options = {}) {
 		throw new Error('Unknown project type')
 	}
 	pkg.version = '0.1.0'
-	pkg.license = license
+	pkg.license = license.spdx
 	pkg.scripts = pkg.scripts ?? {}
 	pkg.scripts.lint = 'prettier --check . && eslint .'
 	pkg.scripts.format = 'prettier --write .'
