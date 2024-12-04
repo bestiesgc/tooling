@@ -1,6 +1,6 @@
 {
 	"name": "create-besties",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "A CLI for creating new apps and libraries using besties' configurations",
 	"main": "bin.js",
 	"homepage": "https://git.gay/besties/tooling/src/branch/main/packages/create-besties",
