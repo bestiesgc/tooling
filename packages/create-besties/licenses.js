@@ -39,7 +39,7 @@ const licenses = [
 ].map(license => {
 	const spdx = license.spdx
 	const licensePath = new URL(`licenses/${spdx}`, import.meta.url)
-	const text = fs.readFileSync(licensePath, 'utf-8')
+	const text = fs.readFileSync(licensePath, 'utf-8').trimEnd() + '\n'
 
 	return {
 		...license,
