@@ -129,12 +129,16 @@ const projectType =
 		]
 	}))
 
+if (p.isCancel(projectType)) process.exit(1)
+
 let authorName = cli.flags.author
 if (authorName === undefined) {
 	authorName = await p.text({
 		message: "Who's authoring this project?",
 		placeholder: '  (hit Enter to use git user.name)'
 	})
+
+	if (p.isCancel(authorName)) process.exit(1)
 }
 if (!authorName) {
 	if (defaultAuthor) {
@@ -165,6 +169,8 @@ if (license === undefined) {
 			}
 		})
 	})
+
+	if (p.isCancel(license)) process.exit(1)
 }
 if (!license) {
 	license = defaultLicense
