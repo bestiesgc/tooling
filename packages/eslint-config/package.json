@@ -1,8 +1,9 @@
 {
 	"name": "@besties/eslint-config",
-	"version": "0.2.5",
+	"version": "0.3.0",
 	"description": "besties' eslint config",
 	"main": "index.js",
+	"types": "index.d.ts",
 	"homepage": "https://git.gay/besties/tooling/src/branch/main/packages/eslint-config",
 	"scripts": {
 		"lint": "eslint ."
@@ -15,13 +16,8 @@
 		"url": "git+https://git.gay/besties/tooling.git",
 		"directory": "packages/eslint-config"
 	},
-	"devDependencies": {
-		"eslint": "^9.2.0",
-		"eslint-config-prettier": "^9.1.0"
-	},
 	"private": false,
-	"peerDependencies": {
-		"eslint": "^9.2.0",
-		"eslint-config-prettier": "^9.1.0"
+	"dependencies": {
+		"eslint": "^9.29.0"
 	}
 }
