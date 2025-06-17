@@ -22,4 +22,4 @@ pnpm create besties my-amazing-app --type app
 
 ## License
 
-[Opinionated Queer License v1.2](./LICENSE.md)
+[MIT](../../LICENSE)

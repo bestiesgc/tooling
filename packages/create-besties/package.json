@@ -14,7 +14,7 @@
 	},
 	"keywords": [],
 	"author": "hazycora",
-	"license": "LicenseRef-OQL-1.2",
+	"license": "MIT",
 	"type": "module",
 	"repository": {
 		"type": "git",
