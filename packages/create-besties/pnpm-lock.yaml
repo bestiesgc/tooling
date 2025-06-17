@@ -24,8 +24,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       sv:
-        specifier: ^0.6.5
-        version: 0.6.5
+        specifier: ^0.8.10
+        version: 0.8.10
     devDependencies:
       '@besties/eslint-config':
         specifier: ^0.2.5
@@ -400,8 +400,8 @@ packages:
     resolution: {integrity: sha512-2rn0BZ+/f7puLOHZm1HOJfwBggfaHXUpPUSSG/SWM4TWp5KCfmNYwnC3hruy2rZlMnmWZ+QAGpZfchu3f3695A==}
     engines: {node: '>=14.18'}
 
-  sv@0.6.5:
-    resolution: {integrity: sha512-zd2Ja0HKNlmg+gWjAw9ziS0ShAiAx8nFE4tfbIeaXoQ3vq84PEKh5GvKr3dZdVRgyKT6q2V1rb+yrhpF+S5LjA==}
+  sv@0.8.10:
+    resolution: {integrity: sha512-32rTCZhcBwPAFinbzuci8P0jMfgj9yQwh1jT+9kaaDz6ktRQ3VTi1yXboTvtLLL6QbAfH/f/Iv58YV8jrxB3Bg==}
     hasBin: true
 
   text-table@0.2.0:
@@ -777,7 +777,7 @@ snapshots:
       has-flag: 4.0.0
       supports-color: 7.2.0
 
-  sv@0.6.5: {}
+  sv@0.8.10: {}
 
   text-table@0.2.0: {}
 

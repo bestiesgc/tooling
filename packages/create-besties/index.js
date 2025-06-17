@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { create as createSvelte } from 'sv'
-import { prettyJSON, getGitUser } from './utils.js'
+import { prettyJSON, getGitUser, sortKeys } from './utils.js'
 import licenses from './licenses.js'
 
 export default async function create(cwd, options = {}) {
@@ -14,6 +14,15 @@ export default async function create(cwd, options = {}) {
 		fs.writeFileSync(
 			path.join(cwd, toPath),
 			fs.readFileSync(new URL(fromPath, import.meta.url)),
+			'utf-8'
+		)
+	}
+	function sedFile(filePath, findExpression, replaceString) {
+		filePath = path.join(cwd, filePath)
+		const current = fs.readFileSync(filePath, 'utf-8')
+		fs.writeFileSync(
+			filePath,
+			current.replaceAll(findExpression, replaceString),
 			'utf-8'
 		)
 	}
@@ -35,27 +44,30 @@ export default async function create(cwd, options = {}) {
 		await createSvelte(cwd, {
 			name,
 			template: 'minimal',
-			types: 'typescript',
-			prettier: true,
-			eslint: true,
-			playwright: false,
-			vitest: false
+			types: 'typescript'
 		})
 		log?.('Updating config files')
 		pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 		pkg.author = author
-		pkg.devDependencies = {
-			'@besties/eslint-config': '^0.2.5',
+		pkg.devDependencies = sortKeys({
+			...pkg.devDependencies,
+			'@besties/eslint-config': '^0.3.0',
+			'@eslint/js': '^9.29.0',
 			'@hazycora/vite-plugin-svelte-svg': '^2.4.2',
-			postcss: '^8.4.49',
 			autoprefixer: '^10.4.20',
+			eslint: '^9.29.0',
+			'eslint-config-prettier': '^10.1.5',
+			'eslint-plugin-svelte': '^3.9.2',
+			globals: '^16.2.0',
+			postcss: '^8.4.49',
 			'postcss-nesting': '^13.0.1',
-			...pkg.devDependencies
-		}
-		// pkg.devDependencies.prettier = '^3.4.1'
-		// pkg.devDependencies['eslint-plugin-svelte'] = '^2.32.4'
-		// pkg.devDependencies['prettier-plugin-svelte'] = '^3.0.3'
+			prettier: '^3.5.3',
+			'prettier-plugin-svelte': '^3.4.0',
+			'typescript-eslint': '^8.34.1'
+		})
+		sedFile('svelte.config.js', /;$/gm, '')
 		copyFile('template/app/.prettierrc', '.prettierrc')
+		copyFile('template/app/.prettierignore', '.prettierignore')
 		copyFile('template/app/eslint.config.mjs', 'eslint.config.mjs')
 		copyFile('template/app/src/routes/+page.svelte', 'src/routes/+page.svelte')
 		copyFile(
@@ -80,22 +92,23 @@ export default async function create(cwd, options = {}) {
 			type: 'module',
 			keywords: [],
 			dependencies: {},
-			devDependencies: {
-				'@besties/eslint-config': '^0.2.5',
-				'@typescript-eslint/eslint-plugin': '^8.16.0',
-				'@typescript-eslint/parser': '^8.16.0',
-				eslint: '^8.0.0',
-				typescript: '^5.4.5',
-				prettier: '^3.2.5'
-			}
+			devDependencies: sortKeys({
+				'@besties/eslint-config': '^0.3.0',
+				'@eslint/js': '^9.29.0',
+				eslint: '^9.29.0',
+				'eslint-config-prettier': '^10.1.5',
+				globals: '^16.2.0',
+				prettier: '^3.2.5',
+				typescript: '^5.0.0',
+				'typescript-eslint': '^8.34.1'
+			})
 		}
 		fs.mkdirSync(cwd, { recursive: true })
 		fs.mkdirSync(path.join(cwd, 'src'), { recursive: true })
 		log?.('Adding config files')
 		copyFile('template/lib/.prettierrc', '.prettierrc')
 		copyFile('template/lib/.prettierignore', '.prettierignore')
-		copyFile('template/lib/.eslintrc.cjs', '.eslintrc.cjs')
-		copyFile('template/lib/.eslintignore', '.eslintignore')
+		copyFile('template/lib/eslint.config.mjs', 'eslint.config.mjs')
 		copyFile('template/lib/gitignore', '.gitignore')
 		copyFile('template/lib/tsconfig.json', 'tsconfig.json')
 	} else {

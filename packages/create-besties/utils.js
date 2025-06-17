@@ -31,3 +31,13 @@ export function getGitUser() {
 		})
 	})
 }
+
+export function sortKeys(obj) {
+	return Object.fromEntries(
+		Object.keys(obj)
+			.sort()
+			.map(key => {
+				return [key, obj[key]]
+			})
+	)
+}
